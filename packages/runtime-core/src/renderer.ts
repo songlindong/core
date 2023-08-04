@@ -1221,6 +1221,7 @@ function baseCreateRenderer(
       if (__DEV__) {
         startMeasure(instance, `init`)
       }
+      // 组件初始化，等效于vue2源码中_init
       setupComponent(instance)
       if (__DEV__) {
         endMeasure(instance, `init`)

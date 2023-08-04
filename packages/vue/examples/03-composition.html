@@ -1,0 +1,37 @@
+<div id="app">
+    <h1>vue2 Composition API</h1>
+    <p>{{ counter }}</p>
+    <comp></comp>
+</div>
+<script src="../dist/vue.global.js"></script>
+<script>
+    const app = Vue.createApp({
+        // data() {
+        //     return {
+        //         counter: 1
+        //     }
+        // },
+        // mounted() {
+        //     setInterval(() => {
+        //         this.counter++
+        //     }, 1000)
+        // },
+        setup(props, { emit, slots, attrs }) {
+            const counter = Vue.ref(0)
+            Vue.onMounted(() => {
+                setInterval(() => {
+                    counter.value++
+                }, 1000)
+            })
+            console.log('set up')
+            return { counter }
+        },
+        created() {
+            console.log('created');
+        }
+    })
+    app.component('comp', {
+        template: '<div>comp</div>'
+    })
+    app.mount('#app')
+</script>
