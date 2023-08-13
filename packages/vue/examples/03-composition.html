@@ -1,6 +1,7 @@
 <div id="app">
-    <h1>vue2 Composition API</h1>
+    <h1>vue3 Composition API</h1>
     <p>{{ counter }}</p>
+    <p>{{ counter2 }}</p>
     <comp></comp>
 </div>
 <script src="../dist/vue.global.js"></script>
@@ -18,13 +19,27 @@
         // },
         setup(props, { emit, slots, attrs }) {
             const counter = Vue.ref(0)
+            let timer
             Vue.onMounted(() => {
-                setInterval(() => {
+               timer =  setInterval(() => {
                     counter.value++
                 }, 1000)
             })
             console.log('set up')
-            return { counter }
+            Vue.onUnmounted(() => {
+                clearInterval(timer)
+            })
+
+            const counter2 = Vue.ref(10)
+            Vue.onMounted(() => {
+                setInterval(() => {
+                    counter2.value++
+                }, 1000)
+                setTimeout(() => {
+                    counter2.value = 10
+                }, 10000)
+            })
+            return { counter, counter2 }
         },
         created() {
             console.log('created');

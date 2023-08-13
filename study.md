@@ -21,9 +21,9 @@
  - 内部会调用patch
 
 ## Vue3 Composition API探究
-包括：setup函数、生命周期钩子、getCurrentInstance、
-Provide/Inject
-动机：可维护性、逻辑复用
+### 包括：setup函数、生命周期钩子、getCurrentInstance、
+### Provide/Inject
+### 动机：可维护性、逻辑复用
 
 体验： 结合reactivity、生命周期钩子、属性/上下文
 
@@ -37,7 +37,25 @@ Provide/Inject
 - 回答：
  - 执行时刻早于beforeCreated和created之类的传统生命周期钩子。实际上在setup函数执行的时候，组件实例已经创建了，所以在setup中去处理beforeCreate和created是没有意义的
 - 传入setup参数中，分别是props和ctx，它们从何而来，又是什么？
+
 - 如果和data这些数据发生冲突，它们呢能共存吗？Vue3处理时的行为
+回答：
+ - 两者共存
+ - 对组件实例上下文instance.ctx做代理，在PublicInstanceProxyHandlers的get中会做逻辑判断处理，优先从setupState中获取，其次是data,最后是props
+### 生命周期的钩子
+
+### 其他有意思的点
+* provide/inject
+* getCurrentInstance()
 
 
 ## Vue3 Reactivity API探究
+### 体验
+* 基础API
+ reactive
+ readonly
+* Refs
+* computed和watch
+* effect scoped API
+### 实现原理
+### Vue3中的响应式应用
