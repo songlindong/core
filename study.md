@@ -58,4 +58,19 @@
 * computed和watch
 * effect scoped API
 ### 实现原理
+* 什么是响应式数据
+ - reactive()
+ - ref()
+* 为什么数据是响应式的时候，他们变化，视图就会更新
+* ref是如何实现的 ，为什么它需要一个value
+* watch底层如何实现
+* computed返回值是什么类型
 ### Vue3中的响应式应用
+
+
+
+
+
+
+### Vue3异步更新策略（nextTick工作原理）
+原理：利用Promise.resolve().then(cb) 微任务的执行方式

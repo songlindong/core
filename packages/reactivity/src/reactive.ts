@@ -88,7 +88,7 @@ export function reactive(target: object) {
   return createReactiveObject(
     target,
     false,
-    mutableHandlers,
+    mutableHandlers, // 普通的对象的代理处理器
     mutableCollectionHandlers,
     reactiveMap
   )
