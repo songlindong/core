@@ -60,7 +60,17 @@
 ### 实现原理
 * 什么是响应式数据
  - reactive()
+  - new Proxy
+  - proxyHandler
+   - get => track() => depsMap
+   - set => trigger() => depsMap => deps
+   - deleteProperty =>
  - ref()
+  - createRef()创建Reflmpl实例 => Reflmpl 
+   - get => trackRefValue => trackEffects
+   - set => triggerRefValue => triggerEffects
+ - ReactiveEffect
+  
 * 为什么数据是响应式的时候，他们变化，视图就会更新
 * ref是如何实现的 ，为什么它需要一个value
 * watch底层如何实现

@@ -41,12 +41,14 @@ export function trackRefValue(ref: RefBase<any>) {
   if (shouldTrack && activeEffect) {
     ref = toRaw(ref)
     if (__DEV__) {
+      // dep是一个有ReactiveEffect构成的Set
       trackEffects(ref.dep || (ref.dep = createDep()), {
         target: ref,
         type: TrackOpTypes.GET,
         key: 'value'
       })
     } else {
+      // 真正的依赖收集
       trackEffects(ref.dep || (ref.dep = createDep()))
     }
   }
