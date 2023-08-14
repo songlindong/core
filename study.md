@@ -84,3 +84,68 @@
 
 ### Vue3异步更新策略（nextTick工作原理）
 原理：利用Promise.resolve().then(cb) 微任务的执行方式
+
+### Vue3编译器原理
+#### 概念
+ 将一种语言转换为另一种语言
+#### vue中为何需要编译器？
+  - 声明式渲染
+  - 编译器会将template编译为render
+  - 前端程序员描述视图时候更喜欢html
+  - 性能优化
+
+#### vue template 和react jsx异同？
+#### 异曲同工
+  - 目标是为了产生虚拟dom
+  - 提高前端程序员视图开发效率
+  - js/jsx/ts/tsx
+
+  * jsx
+   babel -> create() -> vdom
+
+  * template
+   compiler -> render -> vnode
+
+#### 执行时刻
+* vue
+  - 预编译
+    vue版本和执行环境
+    webpack, SFC, vue-loader
+  - 运行时
+    global, esm-browser
+    template选项
+    挂载阶段
+* react jsx
+  - 转译transpile
+
+#### 性能优化
+ Vue3执行编译期优化
+#### 编译器执行时刻
+##### 预编译
+- vue 版本esm结合打包工具webpack等 + SFC
+- vue-loader
+##### 运行时编译
+- vue版本global/esm-browser, 挂载时编译
+
+- vue/src/index.ts
+ setupComponent -> setupStatefulComponent -> finishComponentSetup -> compileToFunction
+
+#### 编译器如何运行？
+
+- parse 
+ 解析template为AST
+- transform
+ AST => AST
+- generate
+ AST => render 
+
+
+
+
+
+
+
+
+
+
+
