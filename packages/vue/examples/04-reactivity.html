@@ -1,0 +1,41 @@
+<div id="app">
+    <h1>vue3 Reactivity API</h1>
+    <p>{{ state.counter }}</p>
+    <p>{{ counter2 }}</p>
+    <comp></comp>
+</div>
+<script src="../dist/vue.global.js"></script>
+<script>
+    const app = Vue.createApp({
+
+        setup(props, { emit, slots, attrs }) {
+            
+            const state = Vue.reactive({
+                counter: 1
+            })
+
+            const counter2 = Vue.ref(1)
+
+            setInterval(() => state.counter++, 1000)
+            setInterval(() => counter2.value++, 1000)
+
+            // 替代之前的watch选项和computed选项
+            Vue.watch(() => state.counter, () =>{
+                // dosomthing
+            })
+            Vue.watch(counter2, () => {
+                // dosomthing
+            })
+
+            const double = Vue.computed(() => state.counter* 2)
+            return { state, counter2 }
+        },
+        created() {
+            console.log('created');
+        }
+    })
+    app.component('comp', {
+        template: '<div>comp</div>'
+    })
+    app.mount('#app')
+</script>

@@ -4,7 +4,7 @@
   "packageManager": "pnpm@8.6.2",
   "type": "module",
   "scripts": {
-    "dev": "node scripts/dev.js",
+    "dev": "node scripts/dev.js --sourcemap",
     "build": "node scripts/build.js",
     "build-dts": "tsc -p tsconfig.build.json && rollup -c rollup.dts.config.js",
     "size": "run-s size-global size-baseline",

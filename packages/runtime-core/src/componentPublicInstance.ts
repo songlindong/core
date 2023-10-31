@@ -315,14 +315,19 @@ export const PublicInstanceProxyHandlers: ProxyHandler<any> = {
     let normalizedProps
     if (key[0] !== '$') {
       const n = accessCache![key]
+      // 缓存情况
       if (n !== undefined) {
         switch (n) {
+          // 首先从setupState中获取
           case AccessTypes.SETUP:
             return setupState[key]
+          // 其次从data返回值获取
           case AccessTypes.DATA:
             return data[key]
+          // 再次是组件上下文
           case AccessTypes.CONTEXT:
             return ctx[key]
+          // 最后从组件属性中获取
           case AccessTypes.PROPS:
             return props![key]
           // default: just fallthrough

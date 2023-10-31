@@ -666,6 +666,7 @@ export function setupComponent(
   initProps(instance, props, isStateful, isSSR)
   initSlots(instance, children)
 
+  // 如果组件有状态，执行状态初始化过程，并返回setup选项的返回值
   const setupResult = isStateful
     ? setupStatefulComponent(instance, isSSR)
     : undefined
@@ -706,6 +707,7 @@ function setupStatefulComponent(
   // 0. create render proxy property access cache
   instance.accessCache = Object.create(null)
   // 1. create public instance / render proxy
+  // 创建公共实例/渲染函数代理
   // also mark it raw so it's never observed
   instance.proxy = markRaw(new Proxy(instance.ctx, PublicInstanceProxyHandlers))
   if (__DEV__) {
@@ -713,7 +715,9 @@ function setupStatefulComponent(
   }
   // 2. call setup()
   const { setup } = Component
+  // 如果用户设置了setup函数
   if (setup) {
+    // 创建setup函数的上下文对象
     const setupContext = (instance.setupContext =
       setup.length > 1 ? createSetupContext(instance) : null)
 
@@ -759,6 +763,8 @@ function setupStatefulComponent(
         )
       }
     } else {
+      // 如果setup函数返回的结果不是一个Promise
+      // 则执行结果处理函数
       handleSetupResult(instance, setupResult, isSSR)
     }
   } else {
@@ -771,6 +777,8 @@ export function handleSetupResult(
   setupResult: unknown,
   isSSR: boolean
 ) {
+  // 首先判断返回的结果是不是函数
+  // 如果是函数，则作为render函数处理
   if (isFunction(setupResult)) {
     // setup returned an inline render function
     if (__SSR__ && (instance.type as ComponentOptions).__ssrInlineRender) {
@@ -792,6 +800,8 @@ export function handleSetupResult(
     if (__DEV__ || __FEATURE_PROD_DEVTOOLS__) {
       instance.devtoolsRawSetupState = setupResult
     }
+    // 转换setupResult这个对象为响应式对象
+    // 将来渲染函数中会首先从setupState里面去获取值
     instance.setupState = proxyRefs(setupResult)
     if (__DEV__) {
       exposeSetupStateOnRenderContext(instance)
@@ -803,6 +813,8 @@ export function handleSetupResult(
       }`
     )
   }
+  // 最后依然要执行组件安装
+  // 里面主要是处理其他的options api
   finishComponentSetup(instance, isSSR)
 }
 
@@ -900,6 +912,7 @@ export function finishComponentSetup(
   }
 
   // support for 2.x options
+  // 这里支持Vue2的options api
   if (__FEATURE_OPTIONS_API__ && !(__COMPAT__ && skipOptions)) {
     setCurrentInstance(instance)
     pauseTracking()
@@ -982,6 +995,7 @@ function getSlotsProxy(instance: ComponentInternalInstance): Slots {
 export function createSetupContext(
   instance: ComponentInternalInstance
 ): SetupContext {
+  // 对外暴露接口
   const expose: SetupContext['expose'] = exposed => {
     if (__DEV__) {
       if (instance.exposed) {
@@ -1022,7 +1036,9 @@ export function createSetupContext(
       expose
     })
   } else {
+    // 返回的就是SetupContext
     return {
+      // 只读的attrs
       get attrs() {
         return getAttrsProxy(instance)
       },

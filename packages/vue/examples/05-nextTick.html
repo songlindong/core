@@ -1,0 +1,29 @@
+<div id="app">
+    <h1>vue3 nextTick</h1>
+    <p ref="p1">{{ counter }}</p>
+</div>
+<script src="../dist/vue.global.js"></script>
+<script>
+    const app = Vue.createApp({
+
+        setup() {
+          const counter = Vue.ref(1)
+          const p1 = Vue.ref(null)
+
+          Vue.onMounted(() => {
+            counter.value++
+            console.log(p1.value.innerHTML);
+            Vue.nextTick(() => {
+                console.log(p1.value.innerHTML);
+            })
+          })
+
+          return {
+            counter,
+            p1
+          }
+        }
+
+    })
+    app.mount('#app')
+</script>
